@@ -1,0 +1,11 @@
+north
+north
+get key
+south
+unlock attic door
+up
+get sledgehammer
+down
+north
+break front door
+out

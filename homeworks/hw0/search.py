@@ -84,23 +84,71 @@ def depthFirstSearch(problem: SearchProblem) -> List[Directions]:
 
     To get started, you might want to try some of these simple commands to
     understand the search problem that is being passed in:
-
-    print("Start:", problem.getStartState())
-    print("Is the start a goal?", problem.isGoalState(problem.getStartState()))
-    print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
-
+        
+    stack = [problem.getStartState()]
+    visited = set()
+    path = []
+    previous = {}
+    while len(stack)>0:
+        currState = stack.pop()
+        visited.add(currState)
+        if problem.isGoalState(currState):
+            while currState!=problem.getStartState():
+                (currState, direction) = previous[currState]
+                path.append(direction)
+            path.reverse()
+            return path
+        for successor in problem.getSuccessors(currState):
+            if successor[0] not in visited:
+                stack.append(successor[0])
+                previous[successor[0]] = (currState, successor[1])
+                
 def breadthFirstSearch(problem: SearchProblem) -> List[Directions]:
-    """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    queue = [problem.getStartState()]
+    visited = set()
+    visited.add(problem.getStartState())
+    path = []
+    previous = {}
+    while len(queue)>0:
+        currState = queue.pop(0)
+        if problem.isGoalState(currState):
+            while currState!=problem.getStartState():
+                (currState, direction) = previous[currState]
+                path.append(direction)
+            path.reverse()
+            return path
+        for successor in problem.getSuccessors(currState):
+            if successor[0] not in visited:
+                queue.append(successor[0])
+                visited.add(successor[0])
+                previous[successor[0]] = (currState, successor[1])
 
 def uniformCostSearch(problem: SearchProblem) -> List[Directions]:
-    """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    pq = util.PriorityQueue()
+    pq.push(problem.getStartState(), 0)
+    distances = {problem.getStartState(): 0}
+    visited = set()
+    path = []
+    previous = {}
+    while not pq.isEmpty():
+        currState = pq.pop()
+        
+        if problem.isGoalState(currState):
+            while currState!=problem.getStartState():
+                (currState, direction) = previous[currState]
+                path.append(direction)
+            path.reverse()
+            return path
+        
+        for successor in problem.getSuccessors(currState):
+            if successor[0] not in visited:
+                dist = distances.get(currState, 0) + successor[2]
+                if successor[0] not in distances or dist < distances[successor[0]]:
+                    pq.push(successor[0], dist)
+                    distances[successor[0]] = dist
+                    previous[successor[0]] = (currState, successor[1])
 
 def nullHeuristic(state, problem=None) -> float:
     """
@@ -110,9 +158,27 @@ def nullHeuristic(state, problem=None) -> float:
     return 0
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic) -> List[Directions]:
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    pq = util.PriorityQueue()
+    pq.push(problem.getStartState(), heuristic(problem.getStartState(), problem))
+    distances = {problem.getStartState(): 0}
+    path = []
+    previous = {}
+    while not pq.isEmpty():
+        currState = pq.pop()
+        
+        if problem.isGoalState(currState):
+            while currState!=problem.getStartState():
+                (currState, direction) = previous[currState]
+                path.append(direction)
+            path.reverse()
+            return path
+        
+        for successor in problem.getSuccessors(currState):
+            dist = distances.get(currState, 0) + successor[2]
+            if successor[0] not in distances or dist < distances[successor[0]]:
+                pq.push(successor[0], dist + heuristic(successor[0], problem))
+                distances[successor[0]] = dist
+                previous[successor[0]] = (currState, successor[1])
 
 # Abbreviations
 bfs = breadthFirstSearch

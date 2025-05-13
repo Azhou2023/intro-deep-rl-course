@@ -1,0 +1,5 @@
+***SPOILER ALERT FOR THE MOVIE HEREDITARY***
+
+In this game, you play as Peter at the end of the horror movie Hereditary. You are attempting to escape the house before your possessed mother Annie catches you and forces the ancient demon Paimon into you. There are several obstacles and requirements, and it all has to be done within a limited time in order to evade being caught.
+
+I picked this topic because I really liked Hereditary, and this ending chase scene in the house especially stuck with me because it was just so horrifying. Peter's helplessness in his own home, being chased by his own mother and members of the cult, was really disturbing and I wanted to recreate that sense of pressure in this game, but also provide a way out that Peter didn't have the luxury of getting in the movie. Enjoy!
